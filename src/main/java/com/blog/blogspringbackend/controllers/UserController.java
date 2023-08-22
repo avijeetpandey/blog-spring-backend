@@ -5,10 +5,7 @@ import com.blog.blogspringbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
@@ -18,16 +15,38 @@ public class UserController {
     private UserService userService;
 
     // Mapping to create a user
-    @PostMapping("/add")
+    @PostMapping("/")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
         UserDto createdUser = this.userService.createUser(userDto);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
     // Mapping to delete a user
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable String userId) {
+        try {
+            this.userService.deleteUser(Integer.parseInt(userId));
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     // Mapping to get a user
+    @GetMapping("/{userId}")
+    public UserDto getUser(@PathVariable String userId) {
+        return this.userService.getUserById(Integer.parseInt(userId));
+    }
 
     // Mapping to update a user
-
+    @PutMapping("/{userId}")
+    public ResponseEntity<HttpStatus> updateUser(@RequestBody UserDto userDto,
+                                                 @PathVariable String userId) {
+        try {
+            this.userService.updateUser(userDto, Integer.parseInt(userId));
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
