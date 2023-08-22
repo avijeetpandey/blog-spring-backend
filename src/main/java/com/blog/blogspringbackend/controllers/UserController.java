@@ -49,11 +49,11 @@ public class UserController {
             this.userService.updateUser(userDto,
                     Integer.parseInt(userId));
 
-            return new ResponseEntity<>(new ApiResponse("user deleted successfully",
+            return new ResponseEntity<>(new ApiResponse("user updated successfully",
                     false),
                     HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ApiResponse("unable to delete user",
+            return new ResponseEntity<>(new ApiResponse("unable to update user",
                     true),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
