@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -46,7 +48,7 @@ public class UserController {
         try {
             this.userService.updateUser(userDto,
                     Integer.parseInt(userId));
-            
+
             return new ResponseEntity<>(new ApiResponse("user deleted successfully",
                     false),
                     HttpStatus.OK);
@@ -55,5 +57,11 @@ public class UserController {
                     true),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    // Mapping to get all users
+    @GetMapping("/")
+    public List<UserDto> getAllUsers() {
+        return this.userService.getAllUsers();
     }
 }
