@@ -22,4 +22,11 @@ public class Post {
     private String image;
 
     private Date addedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToOne
+    private User user;
 }
