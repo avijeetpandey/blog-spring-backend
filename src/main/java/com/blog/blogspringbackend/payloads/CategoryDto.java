@@ -11,8 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CategoryDto {
-    
-    @NotNull
+
     private Integer id;
 
     @NotNull

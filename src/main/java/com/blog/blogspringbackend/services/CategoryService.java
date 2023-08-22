@@ -9,4 +9,5 @@ public interface CategoryService {
     public CategoryDto getCategoryById(Integer categoryId);
     public void deleteCategory(Integer categoryId);
     public CategoryDto updateCategory(CategoryDto categoryDto, Integer categoryId);
+    public CategoryDto createCategory(CategoryDto categoryDto);
 }
