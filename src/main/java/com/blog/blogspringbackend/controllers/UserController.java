@@ -1,5 +1,6 @@
 package com.blog.blogspringbackend.controllers;
 
+import com.blog.blogspringbackend.payloads.ApiResponse;
 import com.blog.blogspringbackend.payloads.UserDto;
 import com.blog.blogspringbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +41,19 @@ public class UserController {
 
     // Mapping to update a user
     @PutMapping("/{userId}")
-    public ResponseEntity<HttpStatus> updateUser(@RequestBody UserDto userDto,
-                                                 @PathVariable String userId) {
+    public ResponseEntity<ApiResponse> updateUser(@RequestBody UserDto userDto,
+                                                  @PathVariable String userId) {
         try {
-            this.userService.updateUser(userDto, Integer.parseInt(userId));
-            return new ResponseEntity<>(HttpStatus.OK);
+            this.userService.updateUser(userDto,
+                    Integer.parseInt(userId));
+            
+            return new ResponseEntity<>(new ApiResponse("user deleted successfully",
+                    false),
+                    HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ApiResponse("unable to delete user",
+                    true),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
