@@ -54,7 +54,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto updatePost(PostDto postDto, Integer postId) {
-
+        return null;
     }
 
     @Override
@@ -76,12 +76,21 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDto> getPostByCategory(Integer categoryId) {
-         return null;
+        Category category = this.categoryRepo.findById(categoryId)
+                .orElseThrow(()-> new ResourceNotFoundException("Category","id",categoryId));
+
+        return this.postRepo.findByCategory(category)
+                 .stream()
+                 .map((post) -> this.modelMapper.map(post, PostDto.class)).toList();
     }
 
     @Override
     public List<PostDto> getPostByUser(Integer userId) {
-        return null;
+        User user = this.userRepo.findById(userId)
+                .orElseThrow(()-> new ResourceNotFoundException("User","id",userId));
+
+        return this.postRepo.findByUser(user)
+                .stream().map((post) -> this.modelMapper.map(post, PostDto.class)).toList();
     }
 
     @Override

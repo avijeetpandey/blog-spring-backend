@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/post")
 public class PostController {
@@ -34,5 +36,16 @@ public class PostController {
     // Mapping to delete post
     // Mapping to fetch one post
     // Mapping to fetch post by a user
+    @GetMapping("/u/{userId}")
+    public ResponseEntity<List<PostDto>> getPostByUser(@PathVariable String userId) {
+       List<PostDto> postsByUser = this.postService.getPostByUser(Integer.parseInt(userId));
+        return new ResponseEntity<>(postsByUser,HttpStatus.OK);
+    }
+
     // Mapping to fetch post by a category
+    @GetMapping("/c/{categoryId}")
+    public ResponseEntity<List<PostDto>> getPostByCategory(@PathVariable String categoryId) {
+        List<PostDto> postsByCategory = this.postService.getPostByCategory(Integer.parseInt(categoryId));
+        return new ResponseEntity<>(postsByCategory,HttpStatus.OK);
+    }
 }
