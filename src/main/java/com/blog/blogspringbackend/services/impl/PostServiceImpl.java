@@ -11,6 +11,9 @@ import com.blog.blogspringbackend.repository.UserRepo;
 import com.blog.blogspringbackend.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -53,7 +56,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto updatePost(PostDto postDto, Integer postId) {
+    public void updatePost(PostDto postDto, Integer postId) {
         Post post = this.postRepo.findById(postId)
                 .orElseThrow(()-> new ResourceNotFoundException("Post","id",postId));
 
@@ -63,7 +66,7 @@ public class PostServiceImpl implements PostService {
 
         this.postRepo.save(post);
 
-        return this.modelMapper.map(post, PostDto.class);
+        this.modelMapper.map(post, PostDto.class);
     }
 
     @Override
@@ -75,11 +78,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts() {
-
-        return this.postRepo.findAll()
-                .stream()
-                .map((post)-> this.modelMapper.map(post, PostDto.class))
+    public List<PostDto> getAllPosts(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+        Page<Post> page = this.postRepo.findAll(pageable);
+        List<Post> posts = page.getContent();
+        return posts.stream()
+                .map(post -> this.modelMapper.map(post,PostDto.class))
                 .toList();
     }
 
