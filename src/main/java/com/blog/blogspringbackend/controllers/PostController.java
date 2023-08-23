@@ -35,14 +35,25 @@ public class PostController {
 
     // Mapping to update post
     @PutMapping("/{postId}")
-    public ResponseEntity<HttpStatus> updatePost(@PathVariable String postId) {
-        return null;
+    public ResponseEntity<HttpStatus> updatePost(@PathVariable String postId,
+                                                 @RequestBody PostDto postDto) {
+        try {
+            this.postService.updatePost(postDto,Integer.parseInt(postId));
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     // Mapping to delete post
     @DeleteMapping("/{postId}")
     public ResponseEntity<HttpStatus> deletePost(@PathVariable String postId) {
-        return null;
+        try {
+            this.postService.deletePost(Integer.parseInt(postId));
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     // Mapping to fetch one post
