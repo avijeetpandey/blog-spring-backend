@@ -40,9 +40,9 @@ public class PostDto {
 
     @NotNull
     @NotEmpty(message = "category cannot be empty")
-    private Category category;
+    private CategoryDto category;
 
     @NotNull
     @NotEmpty
-    private User user;
+    private UserDto user;
 }

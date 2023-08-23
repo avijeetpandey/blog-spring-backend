@@ -32,7 +32,7 @@ public class PostServiceImpl implements PostService {
     private ModelMapper modelMapper;
 
     @Override
-    public Post createPost(PostDto postDto, Integer categoryId, Integer userId) {
+    public PostDto createPost(PostDto postDto, Integer userId, Integer categoryId) {
         // fetching category and user from the ids to add into the post
         User user = this.userRepo.findById(userId)
                 .orElseThrow(()-> new ResourceNotFoundException("User","id",userId));
@@ -46,12 +46,14 @@ public class PostServiceImpl implements PostService {
         post.setAddedDate(new Date());
         post.setCategory(category);
         post.setUser(user);
-        
-        return this.postRepo.save(post);
+
+        Post createdPost = this.postRepo.save(post);
+
+        return this.modelMapper.map(createdPost, PostDto.class);
     }
 
     @Override
-    public Post updatePost(PostDto postDto, Integer postId) {
+    public PostDto updatePost(PostDto postDto, Integer postId) {
         return null;
     }
 
@@ -61,27 +63,27 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getAllPosts() {
+    public List<PostDto> getAllPosts() {
         return null;
     }
 
     @Override
-    public Post getPostById(Integer postId) {
+    public PostDto getPostById(Integer postId) {
         return null;
     }
 
     @Override
-    public List<Post> getPostByCategory(Integer categoryId) {
+    public List<PostDto> getPostByCategory(Integer categoryId) {
         return null;
     }
 
     @Override
-    public List<Post> getPostByUser(Integer userId) {
+    public List<PostDto> getPostByUser(Integer userId) {
         return null;
     }
 
     @Override
-    public List<Post> searchPost(String keyword) {
+    public List<PostDto> searchPost(String keyword) {
         return null;
     }
 }
