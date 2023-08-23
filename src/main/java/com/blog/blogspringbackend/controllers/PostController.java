@@ -29,6 +29,7 @@ public class PostController {
                                                             Integer.parseInt(categoryId));
         return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
+
     // Mapping to update post
     // Mapping to delete post
     // Mapping to fetch one post
