@@ -2,6 +2,7 @@ package com.blog.blogspringbackend.controllers;
 
 import com.blog.blogspringbackend.payloads.PostDto;
 import com.blog.blogspringbackend.services.PostService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,8 +34,24 @@ public class PostController {
     }
 
     // Mapping to update post
+    @PutMapping("/{postId}")
+    public ResponseEntity<HttpStatus> updatePost(@PathVariable String postId) {
+        return null;
+    }
+
     // Mapping to delete post
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<HttpStatus> deletePost(@PathVariable String postId) {
+        return null;
+    }
+
     // Mapping to fetch one post
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostDto> getPost(@PathVariable String postId) {
+        PostDto postDto = this.postService.getPostById(Integer.parseInt(postId));
+        return new ResponseEntity<>(postDto,HttpStatus.OK);
+    }
+
     // Mapping to fetch post by a user
     @GetMapping("/u/{userId}")
     public ResponseEntity<List<PostDto>> getPostByUser(@PathVariable String userId) {
@@ -47,5 +64,12 @@ public class PostController {
     public ResponseEntity<List<PostDto>> getPostByCategory(@PathVariable String categoryId) {
         List<PostDto> postsByCategory = this.postService.getPostByCategory(Integer.parseInt(categoryId));
         return new ResponseEntity<>(postsByCategory,HttpStatus.OK);
+    }
+
+    // Mapping to get all the posts
+    @GetMapping("/")
+    public ResponseEntity<List<PostDto>> getAllPosts() {
+        List<PostDto> allPosts = this.postService.getAllPosts();
+        return new ResponseEntity<>(allPosts,HttpStatus.OK);
     }
 }
