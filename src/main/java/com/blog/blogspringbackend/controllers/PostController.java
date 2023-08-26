@@ -27,9 +27,9 @@ public class PostController {
                                               @PathVariable String userId,
                                               @PathVariable String categoryId) {
 
-        PostDto createdPost =  this.postService.createPost(postDto,
-                                                            Integer.parseInt(userId),
-                                                            Integer.parseInt(categoryId));
+        PostDto createdPost = this.postService.createPost(postDto,
+                Integer.parseInt(userId),
+                Integer.parseInt(categoryId));
         return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
 
@@ -38,7 +38,7 @@ public class PostController {
     public ResponseEntity<HttpStatus> updatePost(@PathVariable String postId,
                                                  @RequestBody PostDto postDto) {
         try {
-            this.postService.updatePost(postDto,Integer.parseInt(postId));
+            this.postService.updatePost(postDto, Integer.parseInt(postId));
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -60,35 +60,35 @@ public class PostController {
     @GetMapping("/{postId}")
     public ResponseEntity<PostDto> getPost(@PathVariable String postId) {
         PostDto postDto = this.postService.getPostById(Integer.parseInt(postId));
-        return new ResponseEntity<>(postDto,HttpStatus.OK);
+        return new ResponseEntity<>(postDto, HttpStatus.OK);
     }
 
     // Mapping to fetch post by a user
     @GetMapping("/u/{userId}")
     public ResponseEntity<List<PostDto>> getPostByUser(@PathVariable String userId) {
-       List<PostDto> postsByUser = this.postService.getPostByUser(Integer.parseInt(userId));
-        return new ResponseEntity<>(postsByUser,HttpStatus.OK);
+        List<PostDto> postsByUser = this.postService.getPostByUser(Integer.parseInt(userId));
+        return new ResponseEntity<>(postsByUser, HttpStatus.OK);
     }
 
     // Mapping to fetch post by a category
     @GetMapping("/c/{categoryId}")
     public ResponseEntity<List<PostDto>> getPostByCategory(@PathVariable String categoryId) {
         List<PostDto> postsByCategory = this.postService.getPostByCategory(Integer.parseInt(categoryId));
-        return new ResponseEntity<>(postsByCategory,HttpStatus.OK);
+        return new ResponseEntity<>(postsByCategory, HttpStatus.OK);
     }
 
     // Mapping to get all the posts
     @GetMapping("/")
     public ResponseEntity<List<PostDto>> getAllPosts(@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
                                                      @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize) {
-        List<PostDto> allPosts = this.postService.getAllPosts(pageNumber,pageSize);
-        return new ResponseEntity<>(allPosts,HttpStatus.OK);
+        List<PostDto> allPosts = this.postService.getAllPosts(pageNumber, pageSize);
+        return new ResponseEntity<>(allPosts, HttpStatus.OK);
     }
 
     // Mapping to handle search query
     @GetMapping("/search/{keyword}")
     public ResponseEntity<List<PostDto>> search(@PathVariable String keyword) {
         List<PostDto> postDto = this.postService.searchPost(keyword);
-        return new ResponseEntity<>(postDto,HttpStatus.OK);
+        return new ResponseEntity<>(postDto, HttpStatus.OK);
     }
 }

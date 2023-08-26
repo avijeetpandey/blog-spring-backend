@@ -35,7 +35,7 @@ public class CategoryController {
     // Mapping to update a category
     @PutMapping("/{categoryId}")
     public ResponseEntity<ApiResponse> updateCategory(@PathVariable String categoryId,
-                                                     @RequestBody CategoryDto categoryDto) {
+                                                      @RequestBody CategoryDto categoryDto) {
         try {
             CategoryDto savedCategory = this.categoryService.getCategoryById(Integer.parseInt(categoryId));
             this.categoryService.updateCategory(savedCategory, Integer.parseInt(categoryId));
@@ -52,10 +52,10 @@ public class CategoryController {
     public ResponseEntity<ApiResponse> deleteCategory(@PathVariable String categoryId) {
         try {
             this.categoryService.deleteCategory(Integer.parseInt(categoryId));
-            ApiResponse apiResponse = new ApiResponse("category deleted successfully",false);
+            ApiResponse apiResponse = new ApiResponse("category deleted successfully", false);
             return new ResponseEntity<>(apiResponse, HttpStatus.OK);
         } catch (Exception ex) {
-            ApiResponse apiResponse = new ApiResponse("unable to delete category",true);
+            ApiResponse apiResponse = new ApiResponse("unable to delete category", true);
             return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
